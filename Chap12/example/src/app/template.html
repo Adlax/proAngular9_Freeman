@@ -1,0 +1,88 @@
+<div [ngClass]="'text-white p-2 m-2 ' + getClasses()">
+  There are {{ model.getProducts().length }} product(s) in the store:
+  <ul>
+    <li *ngFor="let prod of model.getProducts()">{{ prod.name }}</li>
+  </ul>
+</div>
+
+Text content by property binding:
+<div [ngClass]="'text-white m-2 p-2 ' + getClasses()" [textContent]="'Name: ' + (model.getProduct(1).name||'None')">
+</div>
+
+Normal text binding by string interpolation:
+<div [ngClass]="'text-white m-2 p-2 ' + getClasses() ">Name: {{ model.getProduct(1)?.name || 'None'}}</div>
+
+Attribute binding:
+<table class="table table-sm table-bordered table-striped mt-2">
+  <tr>
+    <th>1</th>
+    <th>2</th>
+    <th>3</th>
+    <th>4</th>
+    <th>5</th>
+  </tr>
+  <tr>
+    <td [attr.colspan]="model.getProducts().length">{{model.getProduct(1)?.name || 'None'}}</td>
+  </tr>
+</table>
+
+Another property binding:
+<div class="form-group m-2 bg-success">
+  <label>Name: </label>
+  <input class="form-control" [value]="model.getProduct(1)?.name || 'None'"/>
+</div>
+
+<!-- <script type="text/javascript">displayConsole()</script> -->
+
+Avoir la classe par binding sur [class]:
+<div class="text-white m-2">
+  <div [class]="getClasses2(1)">
+    {{model.getProduct(1).name}}
+  </div>
+  <div [class]="getClasses2(2)">
+    {{model.getProduct(2).name}}
+  </div>
+</div>
+
+Avoir la classe par binding sur une classe unique via [class.myClass]:
+<div class="text-white m-2">
+  <div [class]="getClasses2(1)">
+    {{model.getProduct(1).name}}
+  </div>
+  <div [class.bg-sucess]="model.getProduct(2).price < 50" [class.bg-info]="model.getProduct(2).price >= 50">
+    {{model.getProduct(2).name}}
+  </div>
+</div>
+
+Avoir la classe par binding sur une classe complexe par object sur [ngClass]:
+<div class="text-white m-2">
+  <div class="p-2" [ngClass]="getClassMap(1)">
+    {{model.getProduct(1).name}}
+  </div>
+  <div class="p-2" [ngClass]="getClassMap(2)">
+    {{model.getProduct(2).name}}
+  </div>
+  <div class="p-2" [ngClass]="{'bg-success':model.getProduct(3).price<50,'bg-info':model.getProduct(3).price>=50}">
+    {{model.getProduct(3).name}}
+  </div>
+</div>
+
+Avoir le style par binding sur [style.specStyle]:
+<div class="text-white m-2">
+  <div class="p-2 bg-warning">
+    The <span [style.fontSize]="fontSizeWithUnits">first</span> item is {{model.getProduct(1).name}}
+  </div>
+  <div class="p-2 bg-info">
+    The <span [style.fontSize.px]="fontSizeWithoutUnits">second</span> item is {{model.getProduct(2).name}}
+  </div>
+</div>
+
+Avoir le style par binding d'objet sur [ngStyle]:
+<div class="text-white m-2">
+  <div class="p-2 bg-warning">
+    The <span [ngStyle]="getStyles(1)">first</span> item is {{model.getProduct(1).name}}
+  </div>
+  <div class="p-2 bg-info">
+    The <span [ngStyle]="getStyles(2)">second</span> item is {{model.getProduct(2).name}}
+  </div>
+</div>
