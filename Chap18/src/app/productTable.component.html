@@ -1,0 +1,63 @@
+<div>
+  <label>Taxe Rate : </label>
+  <!-- <select [value]="taxRate || 0" (change)="taxRate=$event.target.value"> -->
+  <select [(ngModel)]="taxRate">
+    <option value="0">None</option>
+    <option value="10">10%</option>
+    <option value="20">20%</option>
+    <option value="50">50%</option>
+  </select>
+</div>
+
+<div>
+  <select [(ngModel)]="categoryFilter">
+    <option value="Chess">Chess</option>
+    <option value="Watersports">Watersports</option>
+    <option value="Soccer">Soccer</option>
+  </select>
+</div>
+
+<div class="bg-info p-2 text-white">
+  <div>Date formated from shortdate : {{ dateObject | date:"shortDate" }}</div>
+  <div>Date formated from mediumdate : {{ dateString | date:"mediumDate" }}</div>
+  <div>Date formated from longdate : {{ dateNumber | date:"longDate" }}</div>
+</div>
+
+<div class="table table-sm table-bordered table-striped">
+  <tr><th>Key</th><th>Value</th></tr>
+  <tr *ngFor="let item of getProducts() | keyvalue">
+    <td>{{item.key}}</td>
+    <td>{{item.value | json}}</td>
+  </tr>
+</div>
+
+<div class="bg-info p-2 text-white">
+  <div>There are {{1 | i18nPlural:numberMap}}</div>
+  <div>There are {{2 | i18nPlural:numberMap}}</div>
+  <div>There are {{150 | i18nPlural:numberMap}}</div>
+
+</div>
+
+<table class="table table-sm table-bordered table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *paFor="let item of getProducts() | filter:categoryFilter; let i = index; let odd = odd; let even = even;" [class.bg-info]="odd" [class.bg-warning]="even">
+      <td style="vertical-align:middle">{{i+1}}</td>
+      <td style="vertical-align:middle">{{item.name | titlecase}}</td>
+      <td style="vertical-align:middle">{{item.category | lowercase}}, Helps you {{item.category | i18nSelect:selectMap}}</td>
+      <td style="vertical-align:middle">{{item.price | addTax:(taxRate||0) | currency:"USD":"symbol":"2.2-2"}}</td>
+      <!-- <td style="vertical-align:middle">{{item.price | currency:"USD":"symbol":"2.2-2"}}</td> -->
+      <td class="text-xs-center">
+        <button class="btn btn-sm btn-danger" (click)="deleteProduct(item.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
